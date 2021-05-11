@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option go_package = "github.com/kirtimd/grpc-go/helloworld";
+
+package helloworld;
+
+service HelloWorld {
+    rpc Greet(GreetRequest) returns (GreetResponse) {}
+
+    //server-side streaming
+    rpc GreetInManyLanguages(GreetRequest) returns (stream GreetResponse) {}
+
+    //client-side streaming
+    rpc GreetManyPeople(stream GreetRequest) returns (GreetResponse) {}
+
+    //bidirectional streaming
+    rpc Chat(stream Talk) returns (stream Talk) {}
+
+}
+
+message GreetRequest {
+    string name = 1;
+}
+
+//for storing greetings in many languages
+message Greeting {
+    string expression = 1;
+}
+
+//GreetResponse = greeting + name
+message GreetResponse {
+    string message = 1;
+}
+
+message Talk {
+    string sentence = 1;
+}
